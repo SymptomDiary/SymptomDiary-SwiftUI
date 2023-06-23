@@ -8,66 +8,71 @@
 import Foundation
 import HealthKit
 
-class HealthKitService{
+extension HKCategoryValueSeverity {
+    var stringRepresentation: String {
+        switch self {
+        case .unspecified:
+            return "Present"
+        case .notPresent:
+            return "Not Present"
+        case .mild:
+            return "Mild"
+        case .moderate:
+            return "Moderate"
+        case .severe:
+            return "Severe"
+        }
+    }
+}
+
+class HealthKitService: ObservableObject {
     let healthStore = HKHealthStore()
     
-    func requestPermissions() {
-           let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
-           let runnyNoseType = HKObjectType.categoryType(forIdentifier: .runnyNose)!
-        
-           let readTypes: Set<HKObjectType> = [heartRateType, runnyNoseType]
-           
-           healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
-               if success {
-                   // Permission granted
-               } else {
-                   // Permission denied or error occurred
-                   if let error = error {
-                       print("Error requesting authorization: \(error.localizedDescription)")
-                   } else {
-                       print("Permission denied.")
-                   }
-               }
-           }
-       }
+    let runnyNoseType = HKObjectType.categoryType(forIdentifier: .runnyNose)!
     
-    func fetchHeartRateData(completion: @escaping (Double?, Error?) -> Void) {
-        let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
+    @Published var runnyNoseData: [HKCategorySample] = []
+    
+    func requestPermissions() {
+        let writeTypes: Set<HKSampleType> = [runnyNoseType]
+        let readTypes: Set<HKObjectType> = [runnyNoseType]
+        
+        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { (success, error) in
+            if success {
+                // Permission granted
+            } else {
+                // Permission denied or error occurred
+                if let error = error {
+                    print("Error requesting authorization: \(error.localizedDescription)")
+                } else {
+                    print("Permission denied.")
+                }
+            }
+        }
+    }
+    
+    func fetchRunnyNoseData() {
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-        let query = HKSampleQuery(sampleType: heartRateType, predicate: nil, limit: 10, sortDescriptors: [sortDescriptor]) { (query, results, error) in
+        let query = HKSampleQuery(sampleType: runnyNoseType, predicate: nil, limit: 10, sortDescriptors: [sortDescriptor]) { (query, results, error) in
             if let error = error {
-                completion(nil, error)
+                print("Error fetching runny nose data: \(error.localizedDescription)")
                 return
             }
             
-            if let quantitySample = results?.first as? HKQuantitySample {
-                let heartRateUnit = HKUnit.count().unitDivided(by: HKUnit.minute())
-                let heartRate = quantitySample.quantity.doubleValue(for: heartRateUnit)
-                completion(heartRate, nil)
-            } else {
-                completion(nil, nil) // Handle the case when no results are available
+            if let runnyNoseData = results as? [HKCategorySample] {
+                DispatchQueue.main.async {
+                    self.runnyNoseData = runnyNoseData
+                }
             }
         }
         
         healthStore.execute(query)
     }
-
-    func fetchRunnyNoseData(completion: @escaping (Int?, Error?) -> Void) {
-        let runnyNoseType = HKObjectType.categoryType(forIdentifier: .runnyNose)!
-        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-        let query = HKSampleQuery(sampleType: runnyNoseType, predicate: nil, limit: 10, sortDescriptors: [sortDescriptor]) { (query, results, error) in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            
-            if let categorySample = results?.first as? HKCategorySample {
-                completion(categorySample.value, nil)
-            } else {
-                completion(nil, nil) // Handle the case when no results are available
-            }
-        }
+    
+    func addRunnyNoseData(severity: HKCategoryValueSeverity, startDate: Date, endDate: Date, completion: @escaping (Bool, Error?) -> Void) {
+        let sample = HKCategorySample(type: runnyNoseType, value: severity.rawValue, start: startDate, end: endDate)
         
-        healthStore.execute(query)
+        healthStore.save(sample) { (success, error) in
+            completion(success, error)
+        }
     }
 }

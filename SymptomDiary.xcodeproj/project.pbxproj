@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C36C69F2A45C8E6007E9BBE /* RunnyNoseGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C69E2A45C8E6007E9BBE /* RunnyNoseGraphView.swift */; };
 		0C96A53A2A421C4C00F57467 /* SymptomDiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A5392A421C4C00F57467 /* SymptomDiaryApp.swift */; };
 		0C96A53F2A421C4C00F57467 /* SymptomDiary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A53D2A421C4C00F57467 /* SymptomDiary.xcdatamodeld */; };
 		0C96A5412A421C4C00F57467 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A5402A421C4C00F57467 /* ContentView.swift */; };
@@ -15,7 +16,6 @@
 		0C96A5512A421C4E00F57467 /* SymptomDiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A5502A421C4E00F57467 /* SymptomDiaryTests.swift */; };
 		0C96A55B2A421C4E00F57467 /* SymptomDiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A55A2A421C4E00F57467 /* SymptomDiaryUITests.swift */; };
 		0C96A55D2A421C4E00F57467 /* SymptomDiaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A55C2A421C4E00F57467 /* SymptomDiaryUITestsLaunchTests.swift */; };
-		0C96A56A2A4224DA00F57467 /* HealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A5692A4224DA00F57467 /* HealthView.swift */; };
 		0C96A56D2A422C7B00F57467 /* RunnyNoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A56C2A422C7B00F57467 /* RunnyNoseView.swift */; };
 		0C96A5712A4232B700F57467 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A5702A4232B700F57467 /* HealthKitService.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C36C69E2A45C8E6007E9BBE /* RunnyNoseGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnyNoseGraphView.swift; sourceTree = "<group>"; };
 		0C96A5362A421C4C00F57467 /* SymptomDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SymptomDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C96A5392A421C4C00F57467 /* SymptomDiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomDiaryApp.swift; sourceTree = "<group>"; };
 		0C96A53E2A421C4C00F57467 /* SymptomDiary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SymptomDiary.xcdatamodel; sourceTree = "<group>"; };
@@ -50,7 +51,6 @@
 		0C96A5562A421C4E00F57467 /* SymptomDiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SymptomDiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C96A55A2A421C4E00F57467 /* SymptomDiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomDiaryUITests.swift; sourceTree = "<group>"; };
 		0C96A55C2A421C4E00F57467 /* SymptomDiaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomDiaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		0C96A5692A4224DA00F57467 /* HealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthView.swift; sourceTree = "<group>"; };
 		0C96A56B2A4229AD00F57467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C96A56C2A422C7B00F57467 /* RunnyNoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnyNoseView.swift; sourceTree = "<group>"; };
 		0C96A5702A4232B700F57467 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
@@ -114,8 +114,8 @@
 				0C96A5442A421C4E00F57467 /* SymptomDiary.entitlements */,
 				0C96A53D2A421C4C00F57467 /* SymptomDiary.xcdatamodeld */,
 				0C96A5452A421C4E00F57467 /* Preview Content */,
-				0C96A5692A4224DA00F57467 /* HealthView.swift */,
 				0C96A56C2A422C7B00F57467 /* RunnyNoseView.swift */,
+				0C36C69E2A45C8E6007E9BBE /* RunnyNoseGraphView.swift */,
 			);
 			path = SymptomDiary;
 			sourceTree = "<group>";
@@ -283,9 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C96A56A2A4224DA00F57467 /* HealthView.swift in Sources */,
 				0C96A53A2A421C4C00F57467 /* SymptomDiaryApp.swift in Sources */,
 				0C96A5712A4232B700F57467 /* HealthKitService.swift in Sources */,
+				0C36C69F2A45C8E6007E9BBE /* RunnyNoseGraphView.swift in Sources */,
 				0C96A56D2A422C7B00F57467 /* RunnyNoseView.swift in Sources */,
 				0C96A53F2A421C4C00F57467 /* SymptomDiary.xcdatamodeld in Sources */,
 				0C96A5412A421C4C00F57467 /* ContentView.swift in Sources */,

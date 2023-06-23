@@ -24,6 +24,8 @@ struct HealthView: View {
                 Text("Fetch Heart Rate")
                     .padding()
             }
+        }.onAppear(){
+            fetchHeartRateData()
         }
     }
        

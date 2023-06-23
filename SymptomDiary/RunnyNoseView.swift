@@ -10,33 +10,51 @@ import HealthKit
 
 
 struct RunnyNoseView: View {
-    let healthKitService: HealthKitService
-    @State private var runnyNose: Int = 0
+    @ObservedObject var healthKitService = HealthKitService()
+    
+    @State private var categoryValueSeverity: HKCategoryValueSeverity = HKCategoryValueSeverity.notPresent
     
     var body: some View {
         VStack {
-            Text("Runny Nose: \(runnyNose)")
-                .font(.title)
-                .padding()
-            
             Button(action: {
-                fetchRunnyNoseData()
-            }) {
-                Text("Fetch Runny Nose")
-                    .padding()
-            }
+                            addRunnyNoseData()
+                        }) {
+                            Text("Add Runny Nose Data")
+                                .padding()
+                        }
+            RunnyNoseSeverityPicker(categoryValueSeverity: $categoryValueSeverity)
         }
     }
     
-    func fetchRunnyNoseData() {
-        healthKitService.fetchRunnyNoseData { runnyNoseValue, error in
-            if let runnyNoseValue = runnyNoseValue {
-                self.runnyNose = runnyNoseValue
-            } else if let error = error {
-                print("Error fetching runny nose data: \(error.localizedDescription)")
+    func addRunnyNoseData() {
+            let startDate = Date()
+            let endDate = Date()
+            
+            healthKitService.addRunnyNoseData(severity: categoryValueSeverity, startDate: startDate, endDate: endDate) { success, error in
+                if success {
+                    print("Runny nose data added successfully.")
+                    healthKitService.fetchRunnyNoseData()
+                } else if let error = error {
+                    print("Error adding runny nose data: \(error.localizedDescription)")
+                } else {
+                    print("Failed to add runny nose data.")
+                }
             }
         }
-        
+    
+}
+
+struct RunnyNoseSeverityPicker: View {
+    @Binding var categoryValueSeverity: HKCategoryValueSeverity
+    
+    var body: some View {
+        Picker(selection: $categoryValueSeverity, label: Text("Picker")) {
+            Text(HKCategoryValueSeverity.unspecified.stringRepresentation).tag(HKCategoryValueSeverity.unspecified)
+            Text(HKCategoryValueSeverity.notPresent.stringRepresentation).tag(HKCategoryValueSeverity.notPresent)
+            Text(HKCategoryValueSeverity.mild.stringRepresentation).tag(HKCategoryValueSeverity.mild)
+            Text(HKCategoryValueSeverity.moderate.stringRepresentation).tag(HKCategoryValueSeverity.moderate)
+            Text(HKCategoryValueSeverity.severe.stringRepresentation).tag(HKCategoryValueSeverity.severe)
+        }
     }
 }
 

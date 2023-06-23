@@ -17,7 +17,7 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             .padding()
-            HealthView(healthKitService: healthKitService).padding()
+            RunnyNoseGraphView(healthKitService: healthKitService).padding()
             RunnyNoseView(healthKitService: healthKitService).padding()
         }.onAppear{
             healthKitService.requestPermissions()
